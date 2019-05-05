@@ -18,7 +18,7 @@ plugins {
 version = '3.0.1'
 
 dependencies {
-    def kafkaVersion = '2.0.0'
+    def kafkaVersion = '1.1.1'
     def slf4jVersion = '1.7.25'
 
     compileOnly group: 'org.apache.kafka', name: 'connect-api', version: kafkaVersion

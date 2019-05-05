@@ -288,7 +288,7 @@ public class KafkaSourceTaskTest {
   @Test
   public void testPollNoRecords() throws Exception {
     mockConsumerInitialization();
-    EasyMock.expect(consumer.poll(Duration.ofMillis(POLL_LOOP_TIMEOUT_MS_VALUE)))
+    EasyMock.expect(consumer.poll(POLL_LOOP_TIMEOUT_MS_VALUE))
         .andReturn(new ConsumerRecords<byte[], byte[]>(Collections.EMPTY_MAP));
     replayAll();
 
@@ -303,7 +303,7 @@ public class KafkaSourceTaskTest {
   @Test
   public void testPollRecordReturnedNoIncludeHeaders() throws Exception {
     mockConsumerInitialization();
-    EasyMock.expect(consumer.poll(Duration.ofMillis(POLL_LOOP_TIMEOUT_MS_VALUE))).andReturn(createTestRecords());
+    EasyMock.expect(consumer.poll(POLL_LOOP_TIMEOUT_MS_VALUE)).andReturn(createTestRecords());
     replayAll();
 
     objectUnderTest.start(opts);
@@ -348,7 +348,7 @@ public class KafkaSourceTaskTest {
     EasyMock.expectLastCall();
 
     // expectation for poll
-    EasyMock.expect(consumer.poll(Duration.ofMillis(POLL_LOOP_TIMEOUT_MS_VALUE)))
+    EasyMock.expect(consumer.poll(POLL_LOOP_TIMEOUT_MS_VALUE))
         .andReturn(createTestRecordsWithHeaders());
     replayAll();
 
@@ -370,7 +370,7 @@ public class KafkaSourceTaskTest {
 
     consumer.wakeup();
     EasyMock.expectLastCall();
-    consumer.close(EasyMock.anyObject());
+    consumer.close();
     EasyMock.expectLastCall();
 
     replayAll();

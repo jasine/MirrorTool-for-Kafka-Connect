@@ -64,6 +64,7 @@ public class KafkaSourceTask extends SourceTask {
   // Consumer
   private KafkaConsumer<byte[], byte[]> consumer;
 
+  @Override
   public void start(Map<String, String> opts) {
     logger.info("{}: task is starting.", this);
     KafkaSourceConnectorConfig sourceConnectorConfig = new KafkaSourceConnectorConfig(opts);
@@ -156,7 +157,7 @@ public class KafkaSourceTask extends SourceTask {
     ArrayList<SourceRecord> records = new ArrayList<>();
     if (poll.get()) {
       try {
-        ConsumerRecords<byte[], byte[]> krecords = consumer.poll(Duration.ofMillis(pollTimeout));
+        ConsumerRecords<byte[], byte[]> krecords = consumer.poll(pollTimeout);
         if (logger.isDebugEnabled())
           logger.debug("{}: Got {} records from source.", this, krecords.count());
         for (ConsumerRecord<byte[], byte[]> krecord : krecords) {
@@ -224,7 +225,7 @@ public class KafkaSourceTask extends SourceTask {
         }
       }
       logger.info("{}: Shutting down consumer.", this);
-      consumer.close(Duration.ofMillis(Math.max(0, maxShutdownWait - (System.currentTimeMillis() - startWait))));
+      consumer.close();
     }
     logger.info("{}: task has been stopped", this);
   }
@@ -234,6 +235,7 @@ public class KafkaSourceTask extends SourceTask {
     return Version.version();
   }
 
+  @Override
   public String toString() {
     return "KafkaSourceTask@" + Integer.toHexString(hashCode());
   }
