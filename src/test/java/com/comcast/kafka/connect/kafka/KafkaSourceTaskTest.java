@@ -70,6 +70,7 @@ public class KafkaSourceTaskTest {
   private static final String SECOND_TOPIC = "another.test.topic";
   private static final int SECOND_PARTITION = 0;
   private static final long SECOND_OFFSET = 456L;
+  private static final String DESTINATIONSUFFIX="-mirror";
 
   private KafkaSourceTask objectUnderTest;
   private Map<String, String> opts;
@@ -92,6 +93,7 @@ public class KafkaSourceTaskTest {
     opts.put(KafkaSourceConnectorConfig.TASK_LEADER_TOPIC_PARTITION_CONFIG, TASK_LEADER_TOPIC_PARTITION_VALUE);
     opts.put(KafkaSourceConnectorConfig.CONSUMER_AUTO_OFFSET_RESET_CONFIG, AUTO_OFFSET_RESET_VALUE);
     opts.put(KafkaSourceConnectorConfig.CONSUMER_GROUP_ID_CONFIG, CONSUMER_GROUP_ID_VALUE);
+    opts.put(KafkaSourceConnectorConfig.DESTINATION_TOPIC_SUFFIX_CONFIG,DESTINATIONSUFFIX);
 
     config = new KafkaSourceConnectorConfig(opts);
     props = new Properties();

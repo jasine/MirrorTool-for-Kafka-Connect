@@ -45,6 +45,7 @@ public class KafkaSourceConnectorTest extends EasyMockSupport {
   private static final String POLL_LOOP_TIMEOUT_MS_VALUE = "2000";
   private static final String TOPIC_LIST_TIMEOUT_MS_VALUE = "5000";
   private static final String CONSUMER_GROUP_ID_VALUE = "test-consumer-group";
+  private static final String DESTINATIONSUFFIX="-mirror";
 
   private PartitionMonitor partitionMonitorMock;
   private ConnectorContext connectorContextMock;
@@ -66,6 +67,7 @@ public class KafkaSourceConnectorTest extends EasyMockSupport {
     sourceProperties.put(KafkaSourceConnectorConfig.POLL_LOOP_TIMEOUT_MS_CONFIG, POLL_LOOP_TIMEOUT_MS_VALUE);
     sourceProperties.put(KafkaSourceConnectorConfig.TOPIC_LIST_TIMEOUT_MS_CONFIG, TOPIC_LIST_TIMEOUT_MS_VALUE);
     sourceProperties.put(KafkaSourceConnectorConfig.CONSUMER_GROUP_ID_CONFIG, CONSUMER_GROUP_ID_VALUE);
+    sourceProperties.put(KafkaSourceConnectorConfig.DESTINATION_TOPIC_SUFFIX_CONFIG,DESTINATIONSUFFIX);
 
     // Default leader topic partitions to return (just one)
     stubLeaderTopicPartitions = new HashSet<>();

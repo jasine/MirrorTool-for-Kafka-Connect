@@ -72,6 +72,10 @@ public class KafkaSourceConnectorConfig extends AbstractConfig {
       + "For convenience, comma (',') is interpreted as interpreted as the regex-choice symbol ('|').";
   public static final Object SOURCE_TOPIC_WHITELIST_DEFAULT = ConfigDef.NO_DEFAULT_VALUE;
 
+    public static final String DESTINATION_TOPIC_SUFFIX_CONFIG =DESTINATION_PREFIX.concat("topic.suffix");
+    public static final String DESTINATION_TOPIC_SUFFIX_DOC = "String specific suffix of destination topic while produce to kafka";
+    public static final Object DESTINATION_TOPIC_SUFFIX_DEFAULT = "";
+
   // Message headers
   public static final String INCLUDE_MESSAGE_HEADERS_CONFIG = "include.message.headers";
   public static final String INCLUDE_MESSAGE_HEADERS_DOC = "Indicates whether message headers from source records should be included in output";
@@ -139,6 +143,8 @@ public class KafkaSourceConnectorConfig extends AbstractConfig {
   public static final ConfigDef CONFIG = new ConfigDef()
       .define(SOURCE_TOPIC_WHITELIST_CONFIG, Type.STRING, SOURCE_TOPIC_WHITELIST_DEFAULT,
           TOPIC_WHITELIST_REGEX_VALIDATOR, Importance.HIGH, SOURCE_TOPIC_WHITELIST_DOC)
+      .define(DESTINATION_TOPIC_SUFFIX_CONFIG,Type.STRING, DESTINATION_TOPIC_SUFFIX_DEFAULT,
+          Importance.MEDIUM,DESTINATION_TOPIC_SUFFIX_DOC)
       .define(INCLUDE_MESSAGE_HEADERS_CONFIG, Type.BOOLEAN, INCLUDE_MESSAGE_HEADERS_DEFAULT, 
           Importance.MEDIUM, INCLUDE_MESSAGE_HEADERS_DOC)
       .define(TOPIC_LIST_TIMEOUT_MS_CONFIG, Type.INT, TOPIC_LIST_TIMEOUT_MS_DEFAULT, 

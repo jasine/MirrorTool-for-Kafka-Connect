@@ -55,6 +55,7 @@ public class KafkaSourceTask extends SourceTask {
   private AtomicBoolean poll = new AtomicBoolean(false);
   // Used to enforce synchronized access to stop and poll
   private final Object stopLock = new Object();
+  private String destinationSuffix;
 
   // Settings
   private int maxShutdownWait;
@@ -71,6 +72,7 @@ public class KafkaSourceTask extends SourceTask {
     maxShutdownWait = sourceConnectorConfig.getInt(KafkaSourceConnectorConfig.MAX_SHUTDOWN_WAIT_MS_CONFIG);
     pollTimeout = sourceConnectorConfig.getInt(KafkaSourceConnectorConfig.POLL_LOOP_TIMEOUT_MS_CONFIG);
     includeHeaders = sourceConnectorConfig.getBoolean(KafkaSourceConnectorConfig.INCLUDE_MESSAGE_HEADERS_CONFIG);
+    destinationSuffix =sourceConnectorConfig.getString(KafkaSourceConnectorConfig.DESTINATION_TOPIC_SUFFIX_CONFIG);
     String unknownOffsetResetPosition = sourceConnectorConfig
         .getString(KafkaSourceConnectorConfig.CONSUMER_AUTO_OFFSET_RESET_CONFIG);
 
@@ -165,7 +167,7 @@ public class KafkaSourceTask extends SourceTask {
               krecord.topic().concat(":").concat(Integer.toString(krecord.partition())));
           Map<String, Long> sourceOffset = Collections.singletonMap(OFFSET_KEY, krecord.offset());
           String sourceTopic = krecord.topic();
-          String destinationTopic = sourceTopic;
+          String destinationTopic = sourceTopic+destinationSuffix;
           byte[] recordKey = krecord.key();
           byte[] recordValue = krecord.value();
           long recordTimestamp = krecord.timestamp();
